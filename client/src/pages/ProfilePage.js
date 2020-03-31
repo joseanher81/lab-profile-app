@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react';
-import { logout, upload } from '../services/authService';
+import React, { useState } from 'react';
+import { upload, useUserLogout, useUser } from '../services/authService';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import {UserContext} from './../contexts/userContext';
+import { useHistory } from "react-router-dom";
 
-const ProfilePage = withRouter(({ history }) => {
-  const {user} = useContext(UserContext);
+const ProfilePage = () => {
   const [file, setFile] = useState('');
+  const user = useUser();
+  let history = useHistory();
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
@@ -22,16 +22,6 @@ const ProfilePage = withRouter(({ history }) => {
     }
   };
 
-  // const doLogout = async (e) => {
-  //   try {
-  //     const res = await logout()
-  //     console.log(res);
-  //     history.push("/");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   return(
     <Container>
       <h1>Profile</h1>
@@ -41,7 +31,7 @@ const ProfilePage = withRouter(({ history }) => {
       <p>{user.campus}</p>
       <p>Course</p>
       <p>{user.course}</p>
-      <Link to="/" onClick={logout}>
+      <Link to="/" onClick={useUserLogout}>
         Logout
       </Link>
 
@@ -54,6 +44,6 @@ const ProfilePage = withRouter(({ history }) => {
           </Form>    
     </Container>
   );
-});
+}
 
 export default ProfilePage;

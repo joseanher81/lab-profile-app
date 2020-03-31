@@ -1,4 +1,25 @@
+import React, { useContext } from "react";
 import axios from "axios";
+
+export const UserContext = React.createContext();
+
+export const useUser = () => {
+  const userState = useContext(UserContext);
+  return userState.user;
+};
+
+export const useUserSetter = () => {
+  const userState = useContext(UserContext);
+  return userState.setUser;
+};
+
+export const useUserLogout = () => {
+  const userState = useContext(UserContext);
+  return async () => {
+    userState.setUser(null);
+    return logout();
+  };
+};
 
 const service = axios.create({baseURL: 'http://localhost:3001/', withCredentials: true});
 

@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { signup } from './../services/authService';
+import React, { useState } from 'react';
+import { signup, useUserSetter } from './../services/authService';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { withRouter } from "react-router-dom";
-import {UserContext} from './../contexts/userContext';
+import { useHistory } from "react-router-dom";
 
-const SignupPage =  withRouter(({ history })=> {
-  const {setUser} = useContext(UserContext);
+const SignupPage =  () => {
+  const history = useHistory();
+  const setUser = useUserSetter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [campus, setCamp] = useState('');
@@ -20,7 +20,6 @@ const SignupPage =  withRouter(({ history })=> {
  
       setUser(user);
       console.log("EL usuario es " + JSON.stringify(user));
-
       history.push("/profile");
     } catch (error) {
       console.log(error);
@@ -63,6 +62,6 @@ const SignupPage =  withRouter(({ history })=> {
           </Form>    
     </Container>
   );
-});
+}
 
 export default SignupPage;

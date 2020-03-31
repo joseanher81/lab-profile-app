@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { login } from './../services/authService';
-import { withRouter } from "react-router-dom";
+import React, { useState } from 'react';
+import { useUserSetter, login } from './../services/authService';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import {UserContext} from './../contexts/userContext';
+import { useHistory } from "react-router-dom";
 
-const LoginPage = withRouter(({ history })=> {
-  const {setUser} = useContext(UserContext);
+const LoginPage = ()=> {
+  let history = useHistory();
+  const setUser = useUserSetter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -51,6 +51,6 @@ const LoginPage = withRouter(({ history })=> {
             </Form>    
       </Container>
   );
-});
+}
 
 export default LoginPage;
